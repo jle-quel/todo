@@ -6,6 +6,7 @@ import "os"
 var state_machine = []StateMachine{
 	{"init", initialize},
 	{"add", add},
+	{"branch", branch},
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +23,7 @@ func usage() {
 	fmt.Println("The commands are:\n")
 	fmt.Println("\tinit\tcreate an empty todo repository or reinitialize an existing one")
 	fmt.Println("\tadd\tcreate and add task in the current branch")
+	fmt.Println("\tbranch\tcreate or switch to specific branch")
 	fmt.Println()
 
 	fmt.Println("Use \"todo help [command]\" for more information about a command.")

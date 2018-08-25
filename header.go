@@ -11,7 +11,7 @@ type Task struct {
 
 type StateMachine struct {
 	Name     string
-	Function func([]string) error
+	Function func([]string, string) error
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -10,7 +10,7 @@ import "os"
 func parse_initialize(argv []string) error {
 	var err error
 
-	if len(argv) != 1 {
+	if len(argv) != 0 {
 		err = fmt.Errorf("usage: todo init")
 	}
 
@@ -38,16 +38,12 @@ func create_repository(path string) error {
 /// PUBLIC FUNCTION
 ////////////////////////////////////////////////////////////////////////////////
 
-func initialize(argv []string) error {
-	var pwd		string
+func initialize(argv []string, pwd string) error {
 	var todo	Todo
 	var err 	error
 
 	if err = parse_initialize(argv); err != nil {
 		return err
-	}
-	if pwd = os.Getenv("PWD"); pwd == "" {
-		return fmt.Errorf("todo: $PWD must be initialized")
 	}
 	if err = create_repository(pwd + "/.todo"); err != nil {
 		return err

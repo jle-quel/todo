@@ -5,6 +5,7 @@ import "os"
 
 var state_machine = []StateMachine{
 	{"init", initialize},
+	{"add", add},
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,15 +21,22 @@ func usage() {
 
 	fmt.Println("The commands are:\n")
 	fmt.Println("\tinit\tcreate an empty todo repository or reinitialize an existing one")
+	fmt.Println("\tadd\tcreate and add task in the current branch")
 	fmt.Println()
 
 	fmt.Println("Use \"todo help [command]\" for more information about a command.")
 }
 
 func core() error {
+	var pwd	string
+
+	if pwd = os.Getenv("PWD"); pwd == "" {
+		return fmt.Errorf("todo: $PWD must be initialized")
+	}
+
 	for index, _ := range state_machine {
 		if state_machine[index].Name == os.Args[1] {
-			return state_machine[index].Function(os.Args[1:])
+			return state_machine[index].Function(os.Args[2:], pwd)
 		}
 	}
 

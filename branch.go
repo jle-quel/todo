@@ -26,7 +26,7 @@ func check_branch_exist(branch string, todo Todo) bool {
 	return false
 }
 
-func append_branch(todo Todo, pwd string, argv []string) error {
+func append_branch(info Info, todo Todo, pwd string, argv []string) error {
 	var index int
 	var err error
 
@@ -41,7 +41,9 @@ func append_branch(todo Todo, pwd string, argv []string) error {
 			}
 		}
 	}
-	if err = write_file(pwd+"/.todo/branch", argv[index]); err != nil {
+
+	info.Branch = argv[index]
+	if err = write_file(pwd+"/.todo/info", info); err != nil {
 		return err
 	}
 
@@ -54,6 +56,7 @@ func append_branch(todo Todo, pwd string, argv []string) error {
 
 func branch(argv []string, pwd string) error {
 	var todo Todo
+	var info Info
 	var err error
 
 	if err = parse_branch(argv); err != nil {
@@ -66,7 +69,10 @@ func branch(argv []string, pwd string) error {
 	if todo, err = get_task(pwd + "/.todo/tasks"); err != nil {
 		return err
 	}
-	if err = append_branch(todo, pwd, argv); err != nil {
+	if info, err = get_info(pwd + "/.todo/info"); err != nil {
+		return err
+	}
+	if err = append_branch(info, todo, pwd, argv); err != nil {
 		return err
 	}
 

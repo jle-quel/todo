@@ -55,7 +55,7 @@ func initialize(argv []string, pwd string) error {
 	if err = write_file(pwd+"/.todo/tasks", todo); err != nil {
 		return err
 	}
-	if err = write_file(pwd+"/.todo/branch", "master"); err != nil {
+	if err = write_file(pwd+"/.todo/info", Info{"master", 0}); err != nil {
 		return err
 	}
 

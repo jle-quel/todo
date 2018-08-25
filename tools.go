@@ -11,10 +11,10 @@ import "strings"
 ////////////////////////////////////////////////////////////////////////////////
 
 func repository_exist(pwd string) bool {
-	var fd	*os.File
-	var err	error
+	var fd *os.File
+	var err error
 
-	if fd, err = os.OpenFile(pwd + "/.todo", os.O_RDONLY, 0600); err != nil {
+	if fd, err = os.OpenFile(pwd+"/.todo", os.O_RDONLY, 0600); err != nil {
 		return false
 	}
 	if err = fd.Close(); err != nil {
@@ -29,8 +29,8 @@ func repository_exist(pwd string) bool {
 ////////////////////////////////////////////////////////////////////////////////
 
 func get_pwd(pwd string) (string, error) {
-	var array	[]string
-	var length	int
+	var array []string
+	var length int
 
 	array = strings.Split(pwd, "/")
 	length = len(array) - 1
@@ -40,7 +40,7 @@ func get_pwd(pwd string) (string, error) {
 			return pwd, nil
 		}
 
-		pwd = strings.TrimRight(pwd, "/" + array[length])
+		pwd = strings.TrimRight(pwd, "/"+array[length])
 		length -= 1
 	}
 

@@ -67,7 +67,7 @@ func add(argv []string, pwd string) error {
 	if todo, err = get_task(pwd + "/.todo/tasks"); err != nil {
 		return err
 	}
-	if err = append_task(branch, todo, pwd + "/.todo/tasks", argv); err != nil {
+	if err = append_task(branch, todo, pwd+"/.todo/tasks", argv); err != nil {
 		return err
 	}
 

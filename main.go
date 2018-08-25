@@ -15,7 +15,7 @@ var state_machine = []StateMachine{
 func usage() {
 	fmt.Println("Todo is the missing tool of Git.")
 	fmt.Println()
-	
+
 	fmt.Println("Usage:\n\n\ttodo command [arguments]")
 	fmt.Println()
 
@@ -28,7 +28,7 @@ func usage() {
 }
 
 func core() error {
-	var pwd	string
+	var pwd string
 
 	if pwd = os.Getenv("PWD"); pwd == "" {
 		return fmt.Errorf("todo: $PWD must be initialized")

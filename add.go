@@ -34,7 +34,7 @@ func append_task(branch string, todo Todo, pwd string, argv []string) error {
 		if todo.CheckTask(branch, argv[index]) {
 			todo[branch] = append(todo[branch], Task{argv[index], 0})
 
-			if err = write_file(pwd, todo); err != nil {
+			if err = write_file(pwd+"/.todo/tasks", todo); err != nil {
 				return err
 			}
 		} else {
@@ -61,13 +61,13 @@ func add(argv []string, pwd string) error {
 		return err
 	}
 
-	if branch, err = get_branch(pwd + "/.todo/branch"); err != nil {
-		return err
-	}
 	if todo, err = get_task(pwd + "/.todo/tasks"); err != nil {
 		return err
 	}
-	if err = append_task(branch, todo, pwd+"/.todo/tasks", argv); err != nil {
+	if branch, err = get_branch(pwd + "/.todo/branch"); err != nil {
+		return err
+	}
+	if err = append_task(branch, todo, pwd, argv); err != nil {
 		return err
 	}
 

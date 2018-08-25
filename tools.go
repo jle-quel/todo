@@ -47,20 +47,20 @@ func get_pwd(pwd string) (string, error) {
 	return "", fmt.Errorf("todo: repository not found (or any of the parent directories)")
 }
 
-func get_branch(pwd string) (string, error) {
+func get_info(pwd string) (Info, error) {
 	var data []byte
-	var buf string
+	var buf Info
 	var err error
 
 	if data, err = ioutil.ReadFile(pwd); err != nil {
 		if os.IsExist(err) {
-			return "", fmt.Errorf("todo: failed to read repository")
+			return Info{}, fmt.Errorf("todo: failed to read repository")
 		} else {
-			return "", fmt.Errorf("todo: repository has not been initialized")
+			return Info{}, fmt.Errorf("todo: repository has not been initialized")
 		}
 	}
 	if err = json.Unmarshal(data, &buf); err != nil {
-		return "", fmt.Errorf("todo: failed to read repository")
+		return Info{}, fmt.Errorf("todo: failed to read repository")
 	}
 
 	return buf, nil

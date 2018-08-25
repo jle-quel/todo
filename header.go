@@ -7,6 +7,7 @@ package main
 type Task struct {
 	Name   string
 	Status uint8
+	Id     int
 }
 
 type StateMachine struct {
@@ -14,9 +15,13 @@ type StateMachine struct {
 	Function func([]string, string) error
 }
 
+type Info struct {
+	Branch string
+	Id     int
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 /// DEFINES
 ////////////////////////////////////////////////////////////////////////////////
 
 type Todo map[string][]Task
-type Paths map[string][]string

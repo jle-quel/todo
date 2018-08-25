@@ -4,24 +4,22 @@ package main
 /// STRUCTURES
 ////////////////////////////////////////////////////////////////////////////////
 
-type Task struct {
-	Name   string
-	Status uint8
-	Id     int
+type Task			struct {
+	Name			string
+	Status			bool
 }
 
-type StateMachine struct {
-	Name     string
-	Function func([]string, string) error
+type StateMachine	struct {
+	Name			string
+	Function		func([]string, string) error
 }
 
-type Info struct {
-	Branch string
-	Id     int
+type Info			struct {
+	Branch			string
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 /// DEFINES
 ////////////////////////////////////////////////////////////////////////////////
 
-type Todo map[string][]Task
+type Todo			map[string][]Task

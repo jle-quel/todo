@@ -7,8 +7,8 @@ import "os"
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func parse_initialize(argv []string) error {
-	var err error
+func	parse_initialize(argv []string) error {
+	var err	error
 
 	if len(argv) != 0 {
 		err = fmt.Errorf("usage: todo init")
@@ -17,8 +17,8 @@ func parse_initialize(argv []string) error {
 	return err
 }
 
-func create_repository(path string) error {
-	var err error
+func	create_repository(path string) error {
+	var err	error
 
 	if err = os.Mkdir(path, 0700); err != nil {
 		if os.IsExist(err) {
@@ -38,9 +38,9 @@ func create_repository(path string) error {
 /// PUBLIC FUNCTION
 ////////////////////////////////////////////////////////////////////////////////
 
-func initialize(argv []string, pwd string) error {
-	var todo Todo
-	var err error
+func	_init(argv []string, pwd string) error {
+	var todo	Todo
+	var err		error
 
 	if err = parse_initialize(argv); err != nil {
 		return err
@@ -52,10 +52,10 @@ func initialize(argv []string, pwd string) error {
 	todo = make(Todo)
 	todo["master"] = []Task{}
 
-	if err = write_file(pwd+"/.todo/tasks", todo); err != nil {
+	if err = write_file(pwd + "/.todo/tasks", todo); err != nil {
 		return err
 	}
-	if err = write_file(pwd+"/.todo/info", Info{"master", 0}); err != nil {
+	if err = write_file(pwd + "/.todo/info", Info{"master"}); err != nil {
 		return err
 	}
 

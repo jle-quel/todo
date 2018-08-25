@@ -1,41 +1,49 @@
 package main
 
 import "fmt"
+import "strings"
 
 ////////////////////////////////////////////////////////////////////////////////
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func parse_branch(argv []string) error {
-	var err error
+func	print_branch(todo Todo, info Info) {
+	var keys	[]string
 
-	if len(argv) < 1 {
-		err = fmt.Errorf("usage: todo branch [arguments...]")
+	keys = get_keys(todo)
+
+	for index, _ := range keys {
+		if keys[index] == info.Branch {
+			fmt.Printf("* \033[0;32m%s\033[0m\n", strings.ToUpper(keys[index]))
+		} else {
+			fmt.Printf("  %s\n", strings.ToUpper(keys[index]))
+		}
 	}
-
-	return err
 }
 
-func check_branch_exist(branch string, todo Todo) bool {
+func	branch_exist(branch string, todo Todo) bool {
+	var result	bool
+
+	result = false
+
 	for key, _ := range todo {
 		if branch == key {
-			return true
+			result = true
 		}
 	}
 
-	return false
+	return result
 }
 
-func append_branch(info Info, todo Todo, pwd string, argv []string) error {
-	var index int
-	var err error
+func	append_branch(info Info, todo Todo, pwd string, argv []string) error {
+	var index	int
+	var err		error
 
 	index = 0
 
 	for index, _ = range argv {
-		if check_branch_exist(argv[index], todo) == false {
+		if branch_exist(argv[index], todo) == false {
 			todo[argv[index]] = []Task{}
-
 			if err = write_file(pwd+"/.todo/tasks", todo); err != nil {
 				return err
 			}
@@ -43,7 +51,7 @@ func append_branch(info Info, todo Todo, pwd string, argv []string) error {
 	}
 
 	info.Branch = argv[index]
-	if err = write_file(pwd+"/.todo/info", info); err != nil {
+	if err = write_file(pwd + "/.todo/info", info); err != nil {
 		return err
 	}
 
@@ -54,26 +62,25 @@ func append_branch(info Info, todo Todo, pwd string, argv []string) error {
 /// PUBLIC FUNCTION
 ////////////////////////////////////////////////////////////////////////////////
 
-func branch(argv []string, pwd string) error {
-	var todo Todo
-	var info Info
-	var err error
+func	branch(argv []string, pwd string) error {
+	var todo	Todo
+	var info	Info
+	var err		error
 
-	if err = parse_branch(argv); err != nil {
-		return err
-	}
 	if pwd, err = get_pwd(pwd); err != nil {
 		return err
 	}
-
 	if todo, err = get_task(pwd + "/.todo/tasks"); err != nil {
 		return err
 	}
 	if info, err = get_info(pwd + "/.todo/info"); err != nil {
 		return err
 	}
-	if err = append_branch(info, todo, pwd, argv); err != nil {
-		return err
+
+	if len(argv) > 0 {
+		return append_branch(info, todo, pwd, argv)
+	} else {
+		print_branch(todo, info)
 	}
 
 	return nil

@@ -4,35 +4,19 @@ import "fmt"
 import "os"
 
 var state_machine = []StateMachine{
-	{"init", initialize},
+	{"init", _init},
 	{"add", add},
 	{"branch", branch},
 	{"ls", list},
+	{"switch", _switch},
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func usage() {
-	fmt.Println("Todo is the missing tool of Git.")
-	fmt.Println()
-
-	fmt.Println("Usage:\n\n\ttodo command [arguments]")
-	fmt.Println()
-
-	fmt.Println("The commands are:\n")
-	fmt.Println("\tinit\tcreate an empty todo repository or reinitialize an existing one")
-	fmt.Println("\tadd\tcreate and add task in the current branch")
-	fmt.Println("\tbranch\tcreate or switch to specific branch")
-	fmt.Println("\tls\tlist the tasks")
-	fmt.Println()
-
-	fmt.Println("Use \"todo help [command]\" for more information about a command.")
-}
-
-func core() error {
-	var pwd string
+func	core() error {
+	var pwd	string
 
 	if pwd = os.Getenv("PWD"); pwd == "" {
 		return fmt.Errorf("todo: $PWD must be initialized")
@@ -51,8 +35,8 @@ func core() error {
 /// PUBLIC FUNCTION
 ////////////////////////////////////////////////////////////////////////////////
 
-func main() {
-	var err error
+func	main() {
+	var err	error
 
 	if len(os.Args) < 2 {
 		usage()

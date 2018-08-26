@@ -3,13 +3,14 @@ package main
 import "fmt"
 import "os"
 
-var state_machine = []StateMachine{
+var todo_function = []TodoFunction {
 	{"init", _init},
 	{"add", add},
 	{"branch", branch},
 	{"ls", list},
 	{"switch", _switch},
 	{"rm", rm},
+	{"help", help},
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -23,9 +24,9 @@ func	core() error {
 		return fmt.Errorf("todo: $PWD must be initialized")
 	}
 
-	for index, _ := range state_machine {
-		if state_machine[index].Name == os.Args[1] {
-			return state_machine[index].Function(os.Args[2:], pwd)
+	for index, _ := range todo_function {
+		if todo_function[index].Name == os.Args[1] {
+			return todo_function[index].Call(os.Args[2:], pwd)
 		}
 	}
 

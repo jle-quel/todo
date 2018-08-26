@@ -9,7 +9,7 @@ Usage:
 
 	todo command [arguments]
 	
-	The commands are:
+The commands are:
 
 	init	create an empty todo repository or reinitialize an existing one
 	add	create and add task in the current branch

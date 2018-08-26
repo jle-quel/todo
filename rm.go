@@ -8,15 +8,19 @@ import "strconv"
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func	(self *Task) GetNewStatus() {
-	if (*self).Status == true {
-		(*self).Status = false
-	} else {
-		(*self).Status = true
+func	remove_this_task(id int, task []Task) []Task {
+	var result	[]Task
+
+	for index, _ := range task {
+		if id != index {
+			result = append(result, task[index])
+		}
 	}
+
+	return result
 }
 
-func	switch_task(argv []string, pwd string, todo Todo, info Info) error {
+func	rm_task(argv []string, pwd string, todo Todo, info Info) error {
 	var id	int
 	var err	error
 
@@ -24,7 +28,7 @@ func	switch_task(argv []string, pwd string, todo Todo, info Info) error {
 		if id, err = strconv.Atoi(argv[index]); err != nil {
 			fmt.Fprintf(os.Stderr, "todo: id \"%s\" is not supported\n", argv[index])
 		} else if id_exist(id, todo[info.Branch]) {
-			todo[info.Branch][id].GetNewStatus()
+			todo[info.Branch] = remove_this_task(id, todo[info.Branch])
 		} else {
 			fmt.Fprintf(os.Stderr, "todo: id \"%s\" does not exist\n", argv[index])
 		}
@@ -33,18 +37,31 @@ func	switch_task(argv []string, pwd string, todo Todo, info Info) error {
 	return write_file(pwd + "/.todo/tasks", todo)
 }
 
+func	rm_branch(pwd string, todo Todo, info Info) error {
+	var err	error
+
+	if info.Branch == "master" {
+		return fmt.Errorf("todo: master branch cannot be erased")
+	}
+
+	delete(todo, info.Branch);
+
+	if err = write_file(pwd + "/.todo/tasks", todo); err != nil {
+		return err
+	}
+
+	info.Branch = "master"
+	return write_file(pwd + "/.todo/info", info)
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 /// PUBLIC FUNCTION
 ////////////////////////////////////////////////////////////////////////////////
 
-func	_switch(argv []string, pwd string) error {
+func	rm(argv []string, pwd string) error {
 	var todo	Todo
 	var info	Info
 	var err		error
-
-	if len(argv) == 0 {
-		return fmt.Errorf("usage: todo switch [arguments...]")
-	}
 
 	if pwd, err = get_pwd(pwd); err != nil {
 		return err
@@ -56,5 +73,9 @@ func	_switch(argv []string, pwd string) error {
 		return err
 	}
 	
-	return switch_task(argv, pwd, todo, info)
+	if len(argv) == 0 {
+		return rm_branch(pwd, todo, info)
+	}
+
+	return rm_task(argv, pwd, todo, info)
 }

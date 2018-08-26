@@ -9,6 +9,7 @@ var state_machine = []StateMachine{
 	{"branch", branch},
 	{"ls", list},
 	{"switch", _switch},
+	{"rm", rm},
 }
 
 ////////////////////////////////////////////////////////////////////////////////

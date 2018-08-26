@@ -7,29 +7,13 @@ import "fmt"
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func	parse_list(argv []string) error {
-	var err	error
-
-	if len(argv) != 0 {
-		err = fmt.Errorf("usage: todo ls")
-	}
-
-	return err
-}
-
 func	list_task(todo Todo, info Info) error {
-	var id	int
-
-	id = 0
-
-	for _, task := range todo[info.Branch] {
+	for index, task := range todo[info.Branch] {
 		if task.Status == false {
-			fmt.Printf("%d → \033[0;31m%s\033[0m\n", id, task.Name)
+			fmt.Printf("%d → \033[0;31m%s\033[0m\n", index, task.Name)
 		} else {
-			fmt.Printf("%d → \033[0;32m%s\033[0m\n", id, task.Name)
+			fmt.Printf("%d → \033[0;32m%s\033[0m\n", index, task.Name)
 		}
-		
-		id += 1
 	}
 
 	return nil
@@ -44,6 +28,10 @@ func	list(argv []string, pwd string) error {
 	var info	Info
 	var err		error
 
+	if len(argv) != 0 {
+		return fmt.Errorf("usage: todo ls")
+	}
+
 	if pwd, err = get_pwd(pwd); err != nil {
 		return err
 	}
@@ -51,10 +39,6 @@ func	list(argv []string, pwd string) error {
 		return err
 	}
 	if info, err = get_info(pwd + "/.todo/info"); err != nil {
-		return err
-	}
-
-	if err = parse_list(argv); err != nil {
 		return err
 	}
 

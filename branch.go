@@ -7,7 +7,7 @@ import "strings"
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func	print_branch(todo Todo, info Info) {
+func	print_branch(todo Todo, info Info) error {
 	var keys	[]string
 
 	keys = get_keys(todo)
@@ -19,43 +19,25 @@ func	print_branch(todo Todo, info Info) {
 			fmt.Printf("  %s\n", strings.ToUpper(keys[index]))
 		}
 	}
+
+	return nil
 }
 
-func	branch_exist(branch string, todo Todo) bool {
-	var result	bool
-
-	result = false
-
-	for key, _ := range todo {
-		if branch == key {
-			result = true
-		}
-	}
-
-	return result
-}
-
-func	append_branch(info Info, todo Todo, pwd string, argv []string) error {
-	var index	int
+func	append_branch(argv []string, pwd string, todo Todo, info Info) error {
 	var err		error
 
-	index = 0
-
-	for index, _ = range argv {
+	for index, _ := range argv {
 		if branch_exist(argv[index], todo) == false {
 			todo[argv[index]] = []Task{}
-			if err = write_file(pwd+"/.todo/tasks", todo); err != nil {
-				return err
-			}
 		}
+		info.Branch = argv[index]
 	}
 
-	info.Branch = argv[index]
-	if err = write_file(pwd + "/.todo/info", info); err != nil {
+	if err = write_file(pwd + "/.todo/tasks", todo); err != nil {
 		return err
 	}
 
-	return nil
+	return write_file(pwd + "/.todo/info", info)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,10 +60,8 @@ func	branch(argv []string, pwd string) error {
 	}
 
 	if len(argv) > 0 {
-		return append_branch(info, todo, pwd, argv)
-	} else {
-		print_branch(todo, info)
+		return append_branch(argv, pwd, todo, info)
 	}
-
-	return nil
+	
+	return print_branch(todo, info)
 }

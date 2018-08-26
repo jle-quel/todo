@@ -43,7 +43,7 @@ func	_switch(argv []string, pwd string) error {
 	var err		error
 
 	if len(argv) == 0 {
-		return fmt.Errorf("usage: todo switch [arguments...]")
+		return fmt.Errorf("usage: todo switch [arguments]")
 	}
 
 	if pwd, err = get_pwd(pwd); err != nil {

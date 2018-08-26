@@ -9,9 +9,14 @@ type Task			struct {
 	Status			bool
 }
 
-type StateMachine	struct {
+type TodoFunction	struct {
 	Name			string
-	Function		func([]string, string) error
+	Call			func([]string, string) error
+}
+
+type HelpFunction	struct {
+	Name			string
+	Call			func() error
 }
 
 type Info			struct {

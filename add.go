@@ -29,7 +29,7 @@ func	add(argv []string, pwd string) error {
 	var err		error
 
 	if len(argv) == 0 {
-		return fmt.Errorf("usage: todo add [arguments...]")
+		return fmt.Errorf("usage: todo add [arguments]")
 	}
 
 	if pwd, err = get_pwd(pwd); err != nil {

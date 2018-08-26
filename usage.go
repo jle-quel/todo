@@ -11,7 +11,7 @@ import "fmt"
 ////////////////////////////////////////////////////////////////////////////////
 
 func usage() {
-	fmt.Println("Todo is a tool for managing your project. 🐜 ")
+	fmt.Println("Todo is a tool for managing your project.")
 	fmt.Println()
 
 	fmt.Println("Usage:\n\n\ttodo command [arguments]")

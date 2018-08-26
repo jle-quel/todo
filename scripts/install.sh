@@ -48,11 +48,11 @@ fi
 
 case ${os} in
 	"Linux"		)
-		echo "Installing for Darwin 🍏 "
-		install "todo_darwin_64bit" ;;
-	"Darwin"	)
 		echo "Installing for Linux 🐧 "
 		install "todo_linux_64bit" ;;
+	"Darwin"	)
+		echo "Installing for Darwin 🍏 "
+		install "todo_darwin_64bit" ;;
 	*			)
 		"💻  → 🗑 " ;;
 esac

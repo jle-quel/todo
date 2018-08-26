@@ -18,7 +18,7 @@ The commands are:
 	switch	modify the status of tasks in the current branch
 	rm	delete current branch and/or tasks of the current branch
 
-	Use "todo help [command]" for more information about a command.
+Use "todo help [command]" for more information about a command.
 ```
 
 ## Installation

@@ -24,7 +24,7 @@ Usage:
 ## Installation
 
 ```
-$ curl -sSL "" | bash
+$ curl -sSL "https://git.io/fNFHP" | bash
 ```
 
 ## Author

@@ -24,13 +24,15 @@ func	print_branchs(todo Todo, info Info) error {
 }
 
 func	append_branch(argv []string, pwd string, todo Todo, info Info) error {
+	var branch	string
 	var err		error
 
 	for index, _ := range argv {
-		if branch_exist(argv[index], todo) == false {
-			todo[argv[index]] = []Task{}
+		branch = strings.ToLower(argv[index])
+		if branch_exist(branch, todo) == false {
+			todo[branch] = []Task{}
 		}
-		info.Branch = argv[index]
+		info.Branch = branch
 	}
 
 	if err = write_file(pwd + "/.todo/tasks", todo); err != nil {
@@ -62,6 +64,6 @@ func	branch(argv []string, pwd string) error {
 	if len(argv) > 0 {
 		return append_branch(argv, pwd, todo, info)
 	}
-	
+
 	return print_branchs(todo, info)
 }

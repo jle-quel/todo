@@ -7,7 +7,7 @@ import "strings"
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func	print_branch(todo Todo, info Info) error {
+func	print_branchs(todo Todo, info Info) error {
 	var keys	[]string
 
 	keys = get_keys(todo)
@@ -63,5 +63,5 @@ func	branch(argv []string, pwd string) error {
 		return append_branch(argv, pwd, todo, info)
 	}
 	
-	return print_branch(todo, info)
+	return print_branchs(todo, info)
 }

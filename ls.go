@@ -1,18 +1,42 @@
 package main
 
 import "fmt"
-//import "os"
+import "strings"
 
 ////////////////////////////////////////////////////////////////////////////////
 /// STATIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
+func	print_task(index int, task Task) {
+	if task.Status == false {
+		fmt.Printf("\t%d | \033[0;31m✘\033[0m %s\n", index, task.Name)
+	} else {
+		fmt.Printf("\t%d | \033[0;32m✔︎\033[0m %s\n", index, task.Name)
+	}
+}
+
+func	print_branch(branch string, info Info) {
+	if branch == info.Branch {
+		fmt.Printf("* \033[0;32m%s\033[0m\n", strings.ToUpper(branch))
+	} else {
+		fmt.Printf("  %s\n", strings.ToUpper(branch))
+	}
+}
+
 func	list_task(todo Todo, info Info) error {
-	for index, task := range todo[info.Branch] {
-		if task.Status == false {
-			fmt.Printf("%d → \033[0;31m%s\033[0m\n", index, task.Name)
-		} else {
-			fmt.Printf("%d → \033[0;32m%s\033[0m\n", index, task.Name)
+	var keys	[]string
+	var length	int
+
+	keys = get_keys(todo)
+	length = len(keys) - 1
+
+	for index, key := range keys {
+		print_branch(key, info)
+		for id, task := range todo[key] {
+			print_task(id, task)
+		}
+		if index < length { 
+			fmt.Println()
 		}
 	}
 

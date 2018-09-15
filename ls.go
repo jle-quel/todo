@@ -25,18 +25,15 @@ func	print_branch(branch string, info Info) {
 
 func	list_task(todo Todo, info Info) error {
 	var keys	[]string
-	var length	int
 
 	keys = get_keys(todo)
-	length = len(keys) - 1
 
-	for index, key := range keys {
-		print_branch(key, info)
+	for _, key := range keys {
+		if len(todo[key]) > 0 {
+			print_branch(key, info)
+		}
 		for id, task := range todo[key] {
 			print_task(id, task)
-		}
-		if index < length { 
-			fmt.Println()
 		}
 	}
 
